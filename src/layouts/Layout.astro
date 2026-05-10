@@ -1,0 +1,142 @@
+---
+import "../styles/global.css";
+
+import Navigation from "../components/navigation.astro";
+import RSidebar from "../components/rsidebar.astro";
+import LoadingAnimation from "../components/LoadingAnimation.astro";
+
+// Accept SEO props
+const {
+  title = "Nick Luca (@kcindev)",
+  description = "Personal blog of Nick Luca, software developer.",
+  url = "https://kcin.dev",
+  image = "/default-og-image.png",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" style="background:#000;">
+  <head>
+    <!-- Prevent theme flash: set theme before page renders and set html background inline -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+          var bg = theme === "dark" ? "#000000" : "#f8fafc";
+          document.documentElement.style.background = bg;
+          document.body && (document.body.style.background = bg);
+        } catch (e) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- SEO Meta -->
+    <meta name="description" content={description} />
+    <meta name="author" content="Nick Luca" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @media (max-width: 1024px) {
+        body {
+          padding-bottom: 80px; /* Space for fixed bottom nav */
+        }
+      }
+    </style>
+  </head>
+  <body class="font-body min-h-screen">
+    <!-- Loading Animation Component -->
+    <LoadingAnimation />
+    <div class="relative h-screen overflow-hidden max-w-[1366px] mx-auto">
+      <!-- Main Content -->
+      <main
+        class="relative z-10 surface h-screen flex flex-col lg:flex-row gap-4 max-w-8xl mx-auto"
+      >
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:block lg:w-[28%] border-r theme-border">
+          <Navigation />
+        </div>
+
+        <!-- Main Content Area -->
+        <div
+          class="flex flex-1 overflow-y-auto hide-scrollbar flex-col lg:flex-row h"
+        >
+          <div class="w-full lg:w-[60%]">
+            <slot />
+          </div>
+          <div class="w-full lg:w-[40%] p-4 lg:sticky lg:top-[-55vh]">
+            <RSidebar />
+          </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav
+          class="fixed bottom-0 left-0 right-0 z-50 nav-bg backdrop-blur-sm border-t theme-border lg:hidden"
+        >
+          <div class="flex justify-around items-center h-15 px-4">
+            <Navigation />
+          </div>
+        </nav>
+      </main>
+    </div>
+    <script>
+      // Theme toggle (keep for manual switching)
+      // @ts-ignore
+      window["toggleTheme"] = function () {
+        const current =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "dark"
+            : "light";
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+        // Update background color immediately
+        var bg = next === "dark" ? "#000000" : "#f8fafc";
+        document.documentElement.style.background = bg;
+        document.body && (document.body.style.background = bg);
+      };
+    </script>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="5a665f32-69be-40cf-abea-7923b603a548"></script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Homelab",
+    "year": 2026,
+    "description": "Homelab to practice Cybersecurity, System Admin, and Network skills",
+    "images": ["", ""],
+    "logo": "",
+    "repo": "https://github.com/kcindev/homelab",
+    "demo": "",
+    "stack": ["Proxmox"],
+    "category": "Homelab"
+  },
+  {
+    "title": "Personal Portfolio Website",
+    "year": 2026,
+    "description": "A simple website about me",
+    "images": ["", ""],
+    "logo": "",
+    "repo": "https://github.com/kcindev/my",
+    "demo": "",
+    "stack": ["Astro", "CSS", "TypeScript", "JavaScript"],
+    "category": "Web Application"
+  },
+  {
+    "title": "Spotify Analytics & Playback Web App",
+    "year": 2025,
+    "description": "Full-stack Spotify analytics dashboard with authentication, personalized data, and in-browser playback controls",
+    "images": ["", ""],
+    "logo": "",
+    "repo": "https://github.com/kcindev/Spotify_local",
+    "demo": "https://spotify.carltechs.com/",
+    "stack": ["React", "Next.js", "Tailwind", "Node.js", "Spotify API"],
+    "category": "Web Application"
+  },
+  {
+    "title": "FILL",
+    "year": 2025,
+    "description": "FILL",
+    "images": ["", ""],
+    "logo": "",
+    "repo": "",
+    "demo": "",
+    "stack": ["FILL", "FILL"],
+    "category": "FILL"
+  },
+  {
+    "title": "Reaction Test",
+    "year": 2024,
+    "description": "A simple reaction test website",
+    "images": ["", ""],
+    "logo": "",
+    "repo": "https://github.com/kcindev/reaction-test",
+    "demo": "",
+    "stack": ["HTML"],
+    "category": "Website"
+  }
+]
