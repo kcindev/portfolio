@@ -15,6 +15,19 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#39;');
 }
 
+function escapeAttribute(value: string) {
+  return escapeHtml(value).replace(/`/g, '&#96;');
+}
+
+function isSafeUrl(value: string) {
+  try {
+    const url = new URL(value, 'https://kcin.dev');
+    return ['http:', 'https:', 'mailto:'].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
 function renderSketchNote(text: string) {
   return `<span class="sketch-note" aria-label="Handwritten annotation"><span class="sketch-note__arrow" aria-hidden="true"></span><span class="sketch-note__text">${escapeHtml(text.trim() || text)}</span></span>`;
 }
@@ -37,6 +50,20 @@ function renderAnnotatedText(text: string) {
 
 marked.use({
   renderer: {
+    html({ text }) {
+      return escapeHtml(text);
+    },
+    link({ href, title, tokens }) {
+      const label = this.parser.parseInline(tokens);
+      if (!isSafeUrl(href)) return label;
+      const titleAttr = title ? ` title="${escapeAttribute(title)}"` : '';
+      return `<a href="${escapeAttribute(href)}"${titleAttr} rel="noopener noreferrer">${label}</a>`;
+    },
+    image({ href, title, text }) {
+      if (!isSafeUrl(href)) return escapeHtml(text);
+      const titleAttr = title ? ` title="${escapeAttribute(title)}"` : '';
+      return `<img src="${escapeAttribute(href)}" alt="${escapeAttribute(text)}"${titleAttr} loading="lazy" />`;
+    },
     text(token) {
       return renderAnnotatedText(token.text);
     },
@@ -79,7 +106,18 @@ const seoTitle = `${postMeta.title} | Nick Luca`;
 const seoDescription = postMeta.excerpt || postMeta.excerpt || "Read this blog post by Nick Luca.";
 const seoUrl = `https://kcin.dev/p/${slug}`;
 const seoImage = postMeta.image || '/default-og-image.png';
-const tags = postMeta.tags?.join(', ');
+const tags = postMeta.tags?.join(', ') || '';
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: postMeta.title,
+  author: { '@type': 'Person', name: 'Nick Luca' },
+  datePublished: postMeta.date,
+  url: seoUrl,
+  image: seoImage,
+  description: seoDescription,
+  keywords: tags,
+}).replace(/</g, '\\u003c');
 ---
 
 <Layout title={seoTitle} description={seoDescription} url={seoUrl} image={seoImage}>
@@ -106,19 +144,7 @@ const tags = postMeta.tags?.join(', ');
   </section>
 
   <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json" is:inline>
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "{postMeta.title}",
-      "author": { "@type": "Person", "name": "Nick Luca" },
-      "datePublished": "{postMeta.date}",
-      "url": "{seoUrl}",
-      "image": "{seoImage}",
-      "description": "{seoDescription}",
-      "keywords": "{tags}"
-    }
-  </script>
+  <script type="application/ld+json" set:html={jsonLd}></script>
 
   <!-- Highlight.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/nord.min.css">
