@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
 
 // ------------------
 // Types
@@ -52,7 +53,7 @@ const projects = (projectsRaw as Project[])
           {/* Images */}
           {project.images?.length > 0 && (
             <div class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
-              {project.images.map((img) => (
+              {project.images.map((img, imageIndex) => (
                 <button
                   type="button"
                   class="group relative h-52 shrink-0 overflow-hidden border theme-border focus:outline-none"
@@ -61,11 +62,13 @@ const projects = (projectsRaw as Project[])
                   data-lightbox-alt={`${project.title} preview`}
                   aria-label={`Open ${project.title} preview`}
                 >
-                  <img
+                  <Image
                     src={img}
                     alt={project.title}
+                    width={416}
+                    height={208}
                     class="h-full w-auto object-cover transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
+                    loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
                   />
                   <span class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10"></span>
                 </button>
@@ -90,6 +93,8 @@ const projects = (projectsRaw as Project[])
               <a
                 href={project.repo}
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${project.title} repository`}
                 class="muted hover:theme-text"
               >
                 Repository
@@ -99,6 +104,8 @@ const projects = (projectsRaw as Project[])
               <a
                 href={project.demo}
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${project.title} live demo`}
                 class="muted hover:theme-text"
               >
                 Live Demo

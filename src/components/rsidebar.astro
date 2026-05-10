@@ -1,12 +1,19 @@
+---
+import { Image } from "astro:assets";
+---
+
 <div class="relative">
     <div class="hidden md:block h-[50vh] mb-10"></div>
     <div class="md:px-6 sticky top-5">
         <div class="relative mb-4">
             <div class="rounded-xl card border-[1.5px] border-black/20 dark:border-white/20 p-4 flex flex-col gap-3">
                 <div class="flex items-center gap-2">
-                    <img
+                    <Image
                         src="https://avatars.githubusercontent.com/u/159816543?v=4"
                         alt="Profile"
+                        width={48}
+                        height={48}
+                        loading="eager"
                         class="w-12 h-12 rounded-full object-cover avatar-border"
                     />
                     <div>
@@ -24,10 +31,10 @@
                 </p>
 
                 <div class="flex gap-3 pt-1">
-                   <a href="https://discord.com/users/195712965536776192"><i class="fa-brands fa-discord" class="muted hover:theme-text transition"></i></a>
-                   <a href="https://github.com/kcindev"><i class="fa-brands fa-github" class="muted hover:theme-text transition"></i></a>
-                   <a href="https://instagram.com/nicklluca_/"><i class="fa-brands fa-instagram" class="muted hover:theme-text transition"></i></a>
-                   <a href="https://linkedin.com/in/kcindev/"><i class="fa-brands fa-linkedin" class="muted hover:theme-text transition"></i></a>
+                   <a href="https://discord.com/users/195712965536776192" aria-label="Discord profile"><i class="fa-brands fa-discord muted hover:theme-text transition" aria-hidden="true"></i></a>
+                   <a href="https://github.com/kcindev" aria-label="GitHub profile"><i class="fa-brands fa-github muted hover:theme-text transition" aria-hidden="true"></i></a>
+                   <a href="https://instagram.com/nicklluca_/" aria-label="Instagram profile"><i class="fa-brands fa-instagram muted hover:theme-text transition" aria-hidden="true"></i></a>
+                   <a href="https://linkedin.com/in/kcindev/" aria-label="LinkedIn profile"><i class="fa-brands fa-linkedin muted hover:theme-text transition" aria-hidden="true"></i></a>
                 </div>
             </div>
             </div>
