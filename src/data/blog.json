@@ -1,11 +1,11 @@
 [
     {
-        "slug": "building-a-discord-bot-for-myself",
-        "title": "Building a Discord Bot for myself",
+        "slug": "blog-test",
+        "title": "add blog",
         "image": "",
-        "excerpt": "A detailed breakdown of how I built a real, production Discord bot with slash commands, automated moderation, scheduled tasks and reminds.",
-        "date": "May , 2026",
+        "excerpt": "blog",
+        "date": "May 10, 2026",
         "readTime": "10 min read",
-        "tags": ["Discord Bot", "NextJS", "Websockets", "Discord Moderation Bot", "Python"]
+        "tags": ["Blog"]
     }
 ]

@@ -20,7 +20,12 @@ type Project = {
 // Import JSON
 // ------------------
 import projectsRaw from "../data/projects.json";
-const projects = (projectsRaw as Project[]).sort((a, b) => b.year - a.year);
+const projects = (projectsRaw as Project[])
+  .map((project) => ({
+    ...project,
+    images: project.images.filter((image) => image.trim().length > 0),
+  }))
+  .sort((a, b) => b.year - a.year);
 ---
 
 <Layout>
